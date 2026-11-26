@@ -317,9 +317,10 @@ button{font:inherit;color:inherit}
 .wcell.plan .txt{font:600 25px/1.4 'Space Grotesk';color:var(--ink)}
 .wcell.plan .ifl{color:var(--purple);font-weight:700}
 
-/* 8 reflection */
-.refl-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;color:#7A7183;font-size:15.5px}
-.refl-q+.refl-q{border-top:1px dashed #E4DCEA}
+/* 8 reflection: empty writing field with a blinking caret */
+.field.write{height:180px;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px 16px;position:relative}
+.field.write .caret{display:block;width:1.5px;height:20px;background:var(--purple);animation:caret 1.05s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
 
 /* 9 feed */
 .bravo-swap{position:relative;display:inline-grid;flex-shrink:0}
@@ -412,7 +413,7 @@ button{font:inherit;color:inherit}
 .close-tag{font:500 28px/1.3 Inter;color:#CDB8E0;margin-top:34px}
 
 /* =====================================================================
-   CHROME: progress, controls, notes
+   CHROME: progress, controls
    ===================================================================== */
 #progress{position:fixed;left:0;top:0;height:3px;background:var(--gold);z-index:90;transition:width .5s var(--ease)}
 #controls{position:fixed;right:18px;bottom:16px;z-index:96;display:flex;align-items:center;gap:6px;background:rgba(23,19,29,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;border-radius:999px;padding:5px;opacity:.35;transition:opacity .25s}
@@ -422,12 +423,6 @@ button{font:inherit;color:inherit}
 #controls button[aria-pressed="true"]{background:var(--gold);color:var(--ink)}
 #counter{font:600 13px/1 Inter;font-variant-numeric:tabular-nums;padding:0 8px;letter-spacing:.04em;min-width:64px;text-align:center}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-#notes{position:fixed;left:0;right:0;bottom:0;z-index:95;max-height:36vh;overflow:auto;background:#170C22;color:#F1EAF7;padding:20px 28px 64px;border-top:3px solid var(--gold);transform:translateY(105%);transition:transform .3s var(--ease);font-size:17px;line-height:1.6}
-#notes.on{transform:none}
-#notes .nh{font:600 12px/1 Inter;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-#notes p{margin:0 0 10px;max-width:110ch}
-#notes ul{margin:0 0 10px;padding-left:20px;max-width:110ch}
-.notes{display:none}
 #hint{position:fixed;left:18px;bottom:22px;z-index:90;font:500 12.5px/1 Inter;color:rgba(255,255,255,.55);transition:opacity .6s}
 #hint kbd{font:600 11px/1 Inter;border:1px solid rgba(255,255,255,.3);border-radius:4px;padding:2px 5px;margin:0 2px}
 
@@ -437,6 +432,7 @@ button{font:inherit;color:inherit}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
   .slide.active .ring-runner{animation:none!important}
+  .field.write .caret{animation:none!important;opacity:1!important}
   #trail{display:none}
   .leaf{display:none}
   .book .bpage.left,.bpage.left .inner{opacity:1!important}
@@ -460,11 +456,6 @@ button{font:inherit;color:inherit}
     <p class="tagline r" style="--i:8">Your goals, your progress, <b>our shared momentum.</b></p>
     <div class="cover-eyebrow r" style="--i:10">Weekly goals · Reflection · Recognition</div>
   </div>
-  <aside class="notes">
-    <p>Momentum is a workplace app for weekly goals, reflection and recognition. The tagline comes straight from the app's own "Why This App?" page.</p>
-    <p>In one sentence: Momentum helps people experience progress, find meaning in their everyday work and feel connected to the people they work with.</p>
-    <p>Over the next slides I'll show the problem it solves, the idea and science behind it, and then walk through the working prototype from three perspectives: employee, leader and CEO.</p>
-  </aside>
 </section>
 
 <!-- ============================ 2 · PROBLEM ============================ -->
@@ -491,12 +482,6 @@ button{font:inherit;color:inherit}
       </div>
     </div>
   </div>
-  <aside class="notes">
-    <p>Most goal tools start with good intentions, but they easily slide into monitoring, micromanaging and comparing people. Then people optimise for what is measured: they tick boxes instead of developing.</p>
-    <p>The headline is the core belief of the Leader Handbook, chapter 1: "Motivation is not something you simply give to people. It is something you can create the conditions for."</p>
-    <p>Chapter 3 names the trap directly: if attention goes only to completed goals, people "may gradually learn that ticking boxes matters more than experimenting, learning or helping others."</p>
-    <p>So the design question for Momentum was: how do we build the conditions for motivation, rather than another place to prove performance?</p>
-  </aside>
 </section>
 
 <!-- ============================ 3 · IDEA ============================ -->
@@ -517,16 +502,6 @@ button{font:inherit;color:inherit}
     <span class="plus">+</span>
     <span class="sc">WOOP</span>
   </div>
-  <aside class="notes">
-    <p>Momentum in one line: a small, supportive part of the working week that helps people experience progress, find meaning and feel connected.</p>
-    <p>Three pillars: <b>Progress</b> (two weekly goals plus one monthly goal, chosen by the employee), <b>Reflection</b> (a short Friday reflection in their own words) and <b>Connection</b> (Bravo! to cheer colleagues on, and monthly department and CEO updates).</p>
-    <p>The science underneath:</p>
-    <ul>
-      <li>Self-determination theory: three basic psychological needs, autonomy, competence and relatedness. The Leader Handbook chapter 2 is built on them, and the AI summary codes reflections against them.</li>
-      <li>A mastery-oriented climate (Handbook chapter 3): success is learning, effort, improvement and collaboration, not outperforming others.</li>
-      <li>WOOP (Wish, Outcome, Obstacle, Plan): a science-based mental strategy used for the monthly goal. More at woopmylife.org.</li>
-    </ul>
-  </aside>
 </section>
 
 <!-- ============================ 4 · RHYTHM ============================ -->
@@ -550,17 +525,6 @@ button{font:inherit;color:inherit}
     <div class="node-pos" style="left:1056px;top:837px"><div class="node r" style="--i:6;--c:var(--gold)"><span class="dot">4</span><div class="when">Friday</div><h3>Reflection</h3></div></div>
     <div class="node-pos" style="left:936px;top:468px"><div class="node r" style="--i:7;--c:var(--coral)"><span class="dot">5</span><div class="when">Monthly</div><h3>Department &amp; CEO updates</h3></div></div>
   </div>
-  <aside class="notes">
-    <p>The rhythm is taken from the app's "How to Use Momentum" page:</p>
-    <ul>
-      <li><b>Start of the month:</b> one monthly goal for broader direction, worked through with WOOP.</li>
-      <li><b>Start of the week:</b> two weekly goals that reflect your own priorities. They can support the monthly goal, or not.</li>
-      <li><b>Throughout the week:</b> mark goals as achieved, adjust them if priorities change, and send a Bravo! when you feel like it.</li>
-      <li><b>End of the week:</b> a Friday reflection on what you learned, what helped and what got in the way.</li>
-      <li><b>Once a month:</b> read updates from other departments and the CEO.</li>
-    </ul>
-    <p>The app says it plainly: it is "intended to be a small and supportive part of your working week, not another task on your to-do list." Set aside time at the start and end of the week; the rest is optional.</p>
-  </aside>
 </section>
 
 <!-- ============================ 5 · PERSPECTIVES ============================ -->
@@ -585,15 +549,6 @@ button{font:inherit;color:inherit}
       <div class="map"><span>Big picture</span><span>Monthly updates</span></div>
     </div>
   </div>
-  <aside class="notes">
-    <p>The prototype is one app with a role switcher: click the avatar to view it as Employee, Leader or CEO. These are the real demo characters.</p>
-    <ul>
-      <li><b>Kari</b>, Product Manager: the employee view with weekly goals, monthly goal plus WOOP, the Friday reflection and the team feed.</li>
-      <li><b>Martin</b>, Head of Product: the leader view with team stats, an AI summary of the team, person detail pages, private 1:1 notes and the Leader Handbook.</li>
-      <li><b>Hanne</b>, CEO: the organization view with department cards and aggregated data only, plus the pinned CEO update.</li>
-    </ul>
-    <p>This is the map for the rest of the deck: first Kari's week, then privacy, then Martin, then Hanne.</p>
-  </aside>
 </section>
 
 <!-- ============================ 6 · WEEKLY GOALS ============================ -->
@@ -626,12 +581,6 @@ button{font:inherit;color:inherit}
     </div>
   </div>
   <div class="toast toast-pos toast-pop" style="top:860px;left:1472px;--td:2.15s;font-size:19px;padding:16px 26px"><i data-ic="bell" data-c="#E8B14A" data-s="22"></i><span>Nice step forward! Your team sees that you reached Weekly goal 1 – never what it was.</span></div>
-  <aside class="notes">
-    <p>Kari's real week. Weekly goal 1, "Lead one customer interview with Silje observing", is achieved and linked to her monthly goal. Weekly goal 2, "Give Jonas feedback on his funnel analysis", is not linked: weekly goals can support the monthly goal or be something else that matters. The progress dots show 1 of 2.</p>
-    <p>The in-app guidance: "Keep it small and within your control. Weekly goals can be steps toward your monthly goal – or something else that matters to you. Your choice."</p>
-    <p>When she ticks a goal, the toast is the real one from the prototype: her team sees that she reached it, never what it was. If she unticks it, the app says "there's no rush and no score."</p>
-    <p>Why two? It's small enough to stay realistic, big enough to create a sense of progress, and it keeps ownership with the employee.</p>
-  </aside>
 </section>
 
 <!-- ============================ 7 · WOOP ============================ -->
@@ -641,30 +590,18 @@ button{font:inherit;color:inherit}
     <div>
       <div class="kicker r" style="--i:0">Monthly goal + WOOP</div>
       <h1 class="hl s r" style="--i:1">Ambition, with a plan for <em>what stops you.</em></h1>
-      <p class="lede r" style="--i:3">WOOP is a science-based strategy: name the inner obstacle, then make an if–then plan.</p>
+      <p class="lede r" style="--i:3">WOOP is a science-based strategy: name the obstacle, then make an if–then plan.</p>
     </div>
     <div class="woop-big r" style="--i:2">
       <div class="wh"><span data-av="kari" data-s="56"></span><div style="flex:1"><div class="t">Kari's monthly goal · November</div></div><span class="tag" style="font-size:15px;padding:6px 13px">Making progress</span></div>
       <div class="wgrid">
         <div class="wcell r" style="--i:4"><span class="wbadge">W</span><div><div class="lab">Wish</div><div class="txt" style="font:700 23px/1.3 'Space Grotesk';color:var(--ink)">Get comfortable leading customer interviews on my own</div></div></div>
         <div class="wcell r" style="--i:5"><span class="wbadge">O</span><div><div class="lab">Outcome</div><div class="txt">I lead interviews calmly, customers open up, and I feel I really understand what they need, which is why I do this job.</div></div></div>
-        <div class="wcell r" style="--i:6;grid-column:1/-1"><span class="wbadge">O</span><div><div class="lab">Inner obstacle</div><div class="txt">I get nervous and over-prepare questions instead of practising out loud.</div></div></div>
+        <div class="wcell r" style="--i:6;grid-column:1/-1"><span class="wbadge">O</span><div><div class="lab">Obstacle</div><div class="txt">I get nervous and over-prepare questions instead of practising out loud.</div></div></div>
         <div class="wcell plan r" style="--i:8"><span class="wbadge">P</span><div><div class="lab" style="color:var(--gold-ink)">Plan · if–then</div><div class="txt"><span class="ifl">If</span> I notice I'm rewriting my interview guide the day before, <span class="ifl">then</span> I'll do a ten-minute practice interview with a colleague instead.</div></div></div>
       </div>
     </div>
   </div>
-  <aside class="notes">
-    <p>Once a month, Kari sets one more ambitious goal: something she wants to learn or get better at. "No numbers or targets needed."</p>
-    <p>Her real WOOP from the prototype:</p>
-    <ul>
-      <li><b>Wish:</b> Get comfortable leading customer interviews on my own.</li>
-      <li><b>Outcome:</b> I lead interviews calmly, customers open up, and I feel I really understand what they need, which is why I do this job.</li>
-      <li><b>Obstacle:</b> I get nervous and over-prepare questions instead of practising out loud.</li>
-      <li><b>Plan:</b> If I notice I'm rewriting my interview guide the day before, then I'll do a ten-minute practice interview with a colleague instead.</li>
-    </ul>
-    <p>The obstacle is deliberately an inner one: "A habit, feeling or thought – not something outside you." The app frames it as preparation, not weakness: "Recognizing an obstacle is not a sign of weakness, but an opportunity to prepare for it." Obstacles outside your control are for the Friday reflection and your manager.</p>
-    <p>Notice how her weekly goal 1 (interview with Silje observing) is a stepping stone toward this wish.</p>
-  </aside>
 </section>
 
 <!-- ============================ 8 · REFLECTION ============================ -->
@@ -680,25 +617,12 @@ button{font:inherit;color:inherit}
       <div class="ui" style="zoom:1.45">
         <section class="card accent">
           <div class="card-head" style="margin-bottom:10px"><div><div class="eyebrow">Friday reflection</div><h2>How did your week go?</h2></div></div>
-          <div class="field" style="padding:6px 16px">
-            <div class="refl-q r" style="--i:4"><span>What did you learn?</span><span class="tag pos">Competence</span></div>
-            <div class="refl-q r" style="--i:5"><span>Where did you get to decide for yourself?</span><span class="tag pos">Autonomy</span></div>
-            <div class="refl-q r" style="--i:6"><span>Who helped you – or who did you help?</span><span class="tag pos">Relatedness</span></div>
-            <div class="refl-q r" style="--i:7"><span>What got in the way?</span><span class="tag obs">Obstacles</span></div>
-          </div>
-          <div class="mk-hl r" style="--i:9;margin-top:12px;display:flex;gap:10px;align-items:center"><i data-ic="spark" data-c="#7A5208" data-s="16"></i>Unfinished goals are useful information, not failure.</div>
-          <div class="note" style="margin:12px 0 14px"><i data-ic="eye" data-s="16"></i><span>Your leader can read your reflection, so they can help remove obstacles and support you.</span></div>
-          <span class="btn primary">Save reflection</span>
+          <div class="field write r" style="--i:4" aria-label="Empty reflection field"><span class="caret"></span></div>
+          <span class="btn primary r" style="--i:6;margin-top:14px">Save reflection</span>
         </section>
       </div>
     </div>
   </div>
-  <aside class="notes">
-    <p>At the end of the week, Kari writes a short reflection. The prompt in the app reads: "What did you learn? Where did you get to decide for yourself? Who helped you – or who did you help? What got in the way? Unfinished goals are useful information, not failure."</p>
-    <p>The four questions line up with the three psychological needs (competence, autonomy, relatedness) plus obstacles. The tags on the slide show that mapping; they are not shown in the app itself. Those are exactly the themes the leader's summary later codes.</p>
-    <p>From the FAQ: "There is no right or wrong answer." And: "Not achieving a goal is a natural part of working life and does not have negative consequences in Momentum."</p>
-    <p>Privacy: only Kari and her manager can read it.</p>
-  </aside>
 </section>
 
 <!-- ============================ 9 · FEED ============================ -->
@@ -722,12 +646,6 @@ button{font:inherit;color:inherit}
       <div class="toast toast-pos toast-pop" style="top:calc(100% + 30px);--td:2.2s;font-size:20px;padding:15px 26px"><i data-ic="bell" data-c="#E8B14A" data-s="22"></i><span>Bravo! sent to Kari</span></div>
     </div>
   </div>
-  <aside class="notes">
-    <p>The team feed shows when a colleague takes a step forward, never what the goal is. The app's own subtitle: "See when colleagues take a step forward – never what the goal is. Send a Bravo! if you want to cheer them on."</p>
-    <p>These rows are from the Product team's real feed: Silje, Kari, Ingrid and Ahmed (who achieved his monthly goal).</p>
-    <p>Bravo! is designed to avoid becoming a popularity contest. From the FAQ: there is no expectation to send a certain number or to return one, and "Bravo! is a gesture of encouragement, not a measure of performance, popularity or contribution."</p>
-    <p>This is relatedness by design: recognition without exposure.</p>
-  </aside>
 </section>
 
 <!-- ============================ 10 · PRIVACY ============================ -->
@@ -773,17 +691,6 @@ button{font:inherit;color:inherit}
     </div>
   </div>
   <div class="promise r" style="--i:5"><span class="ic"><i data-ic="lock" data-s="22"></i></span>Support, not evaluation. <span class="m">Never used for appraisal, pay or ranking.</span></div>
-  <aside class="notes">
-    <p>From the app's "Privacy – Who Sees What" page:</p>
-    <ul>
-      <li><b>Goals:</b> the content of your monthly and weekly goals is only visible to you and your manager. Colleagues see when you achieve a goal, but not what it is about.</li>
-      <li><b>WOOP and Friday reflection:</b> only you and your manager.</li>
-      <li><b>Monthly updates:</b> department and CEO updates are visible across the organization, and focus on collective contributions, not individual performance.</li>
-      <li><b>CEO:</b> sees aggregated data per department. "Individual goals and reflections are visible only to the department's leader."</li>
-    </ul>
-    <p>The promise: "Momentum is not a tool for monitoring, micromanaging or evaluating your performance. Your goals, reflections and level of engagement with Momentum are not to be used for performance evaluations, employee rankings or compensation decisions."</p>
-    <p>This is the single biggest difference from typical goal tools.</p>
-  </aside>
 </section>
 
 <!-- ============================ 11 · LEADER AI ============================ -->
@@ -833,18 +740,6 @@ button{font:inherit;color:inherit}
       </section>
     </div>
   </div>
-  <aside class="notes">
-    <p>Martin's dashboard for the Product team (7 people). Four stat tiles: 6 of 7 have set a monthly goal, 5 of 12 weekly goals are achieved so far, 8 of 12 weekly goals are linked to a monthly goal, and 5 of 7 wrote a Friday reflection.</p>
-    <p>The AI summary turns reflections into support signals:</p>
-    <ul>
-      <li><b>Motivation signals</b> for autonomy, competence and relatedness: Strong, Mixed or At risk.</li>
-      <li><b>Key obstacles</b> as bars: workload and meetings (3 people), plus waiting on others, unclear priorities and energy (1 each).</li>
-      <li><b>Who might need a check-in:</b> Silje (wants more say, feels stuck, low energy) and Sindre (hasn't set goals yet).</li>
-      <li><b>Suggested actions</b> tied to each need and obstacle. The card lists five; three are shown here.</li>
-    </ul>
-    <p>Be honest about the prototype: reflections are coded with keyword rules and the summary is generated from that coding. A live version would use an AI model to read and code the text. The summary describes the team as a whole; it does not rank or evaluate anyone.</p>
-    <p>On each person's page, progress is shown only against their own earlier weeks, "never with colleagues", next to a private notes field for the next 1:1.</p>
-  </aside>
 </section>
 
 <!-- ============================ 12 · CEO ============================ -->
@@ -891,17 +786,6 @@ button{font:inherit;color:inherit}
     </div></div>
   </div>
   <div class="lock-note r" style="--i:8"><span class="ic"><i data-ic="lock" data-s="20"></i></span><span><b>Aggregated only.</b> Individual goals and reflections stay with the department leader.</span></div>
-  <aside class="notes">
-    <p>Hanne's organization view: one card per department, with the leader, team size, progress bars, the three need signals and the main obstacle. All numbers are from the prototype's demo data (22 employees in four departments).</p>
-    <ul>
-      <li><b>Product</b> (Martin): autonomy at risk, main obstacle workload and meetings.</li>
-      <li><b>Design</b> (Nora): competence strong, relatedness mixed, main obstacle energy and wellbeing.</li>
-      <li><b>Engineering</b> (Erik): all three needs strong, main obstacle tools and resources.</li>
-      <li><b>People &amp; Culture</b> (Camilla): competence at risk, main obstacle waiting on others.</li>
-    </ul>
-    <p>The cards also show weekly goals achieved; that bar is left out here to keep the slide clean.</p>
-    <p>The key design choice, as the app says: "You see aggregated data for the department. Individual goals and reflections are visible only to the department's leader." The CEO can spot where support is needed without ever reading someone's reflection.</p>
-  </aside>
 </section>
 
 <!-- ============================ 13 · MONTHLY UPDATES ============================ -->
@@ -910,7 +794,7 @@ button{font:inherit;color:inherit}
   <div class="month-grid">
     <div>
       <div class="kicker r" style="--i:0">Monthly updates</div>
-      <p class="pull r" style="--i:1"><span class="q">“</span>These are not four separate stories. They are <span style="color:var(--gold)">different parts of the same story.</span><span class="q">”</span></p>
+      <p class="pull r" style="--i:1"><span class="q">“</span>These are not four separate contributions. They are <span style="color:var(--gold)">different parts of the same momentum.</span><span class="q">”</span></p>
       <div class="pull-by r" style="--i:3"><span data-av="hanne" data-s="64"></span><div><div class="n">Hanne, CEO</div><div class="t">November update · pinned for everyone</div></div></div>
     </div>
     <div class="posts r" style="--i:2">
@@ -931,19 +815,13 @@ button{font:inherit;color:inherit}
       </div>
     </div>
   </div>
-  <aside class="notes">
-    <p>Once a month every department leader writes an update, and the CEO writes one that ties them together. They are visible to everyone and focus on collective learning and contributions, not individual performance.</p>
-    <p>The writing prompt in the app nudges the tone: "Describe progress compared to where you were, not compared to other teams… Avoid rankings, targets hit/missed or 'best/top' language." Updates must not include anything from personal goals or reflections.</p>
-    <p>Hanne's November update connects the four department stories: Product understood customers, Design made it intuitive, Engineering built the foundation, People &amp; Culture improved the conditions for everyone. Her line: "These are not four separate stories. They are different parts of the same story."</p>
-    <p>This is how Momentum connects everyday work to a bigger picture, and colleagues can send a Bravo! to a whole department.</p>
-  </aside>
 </section>
 
 <!-- ============================ 14 · HANDBOOK ============================ -->
 <section class="slide light" data-theme="light" data-title="Leader Handbook">
   <img class="corner" data-img="p" alt="">
   <div class="kicker r" style="--i:0"><i data-ic="book" data-s="22"></i>Leader Handbook</div>
-  <h1 class="hl s r" style="--i:1;margin-top:20px">Leaders get a playbook, <em>not a scoreboard.</em></h1>
+  <h1 class="hl s r" style="--i:1;margin-top:20px">Developing leaders, through <em>“Momentum's Leadership Handbook”</em></h1>
   <div class="hb-grid">
     <div class="book r" style="--i:2">
       <div class="bpage left"><div class="inner">
@@ -977,15 +855,6 @@ button{font:inherit;color:inherit}
       </div>
     </div>
   </div>
-  <aside class="notes">
-    <p>Leaders get a built-in Leader Handbook that opens as a book with a page-flip animation. Six chapters plus a Leadership Reflection Tool:</p>
-    <ul>
-      <li>01 Your role as a leader · 02 Supporting the three psychological needs · 03 Creating a mastery-oriented culture · 04 Supporting goals and reflections · 05 The art of motivating feedback · 06 Building shared momentum · 07 Leadership Reflection Tool ("How have I supported my people this month?").</li>
-    </ul>
-    <p>The example is from chapter 4. Kari writes that she didn't manage the interview on her own, that she over-prepared because she was nervous, and that having Silje observe helped. Note how it echoes her WOOP obstacle.</p>
-    <p>The less supportive response puts pressure on her. The more supportive one acknowledges her perspective, recognizes learning and offers support (the full version also offers time for a practice interview) "while preserving ownership of the next step."</p>
-    <p>The point: Momentum doesn't just give leaders data; it teaches them how to respond to it.</p>
-  </aside>
 </section>
 
 <!-- ============================ 15 · CLOSE ============================ -->
@@ -1000,28 +869,16 @@ button{font:inherit;color:inherit}
     <h1 class="close-line r" style="--i:7">Our momentum is something we <em>create together.</em></h1>
     <p class="close-tag r" style="--i:9">Your goals, your progress, our shared momentum.</p>
   </div>
-  <aside class="notes">
-    <p>To sum up the story: goal tools often become surveillance. Momentum starts from the opposite belief, that motivation is created by conditions.</p>
-    <ul>
-      <li>For employees: small goals they own, a WOOP plan, and a Friday reflection where unfinished goals are information, not failure.</li>
-      <li>For colleagues: recognition without exposure. See that, never what.</li>
-      <li>For leaders: signals to support, not scores to judge, plus a handbook on how to respond.</li>
-      <li>For the CEO: the big picture in aggregate, and one shared story every month.</li>
-    </ul>
-    <p>The closing line is the last line of both the Leader Handbook and Hanne's CEO update: "Our momentum is something we create together."</p>
-  </aside>
 </section>
 </div>
 
-<div id="hint"><kbd>←</kbd><kbd>→</kbd> navigate · <kbd>N</kbd> notes · <kbd>F</kbd> fullscreen</div>
+<div id="hint"><kbd>←</kbd><kbd>→</kbd> navigate · <kbd>F</kbd> fullscreen</div>
 <div id="controls" role="toolbar" aria-label="Slide controls">
   <button id="prev" aria-label="Previous slide"></button>
   <span id="counter" aria-live="polite">01 / 15</span>
   <button id="next" aria-label="Next slide"></button>
-  <button id="notesBtn" aria-label="Toggle speaker notes (N)" aria-pressed="false"></button>
   <button id="fsBtn" aria-label="Toggle fullscreen (F)"></button>
 </div>
-<div id="notes" aria-live="polite"><div class="nh"></div><div class="nb"></div></div>
 
 <script>
 /* ---------- avatars: avatarSVG() ported from momentum.html, real demo characters ---------- */
@@ -1063,17 +920,16 @@ const I={
   list:(c='currentColor',s=14)=>`<svg aria-hidden="true" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>`,
   left:(c='currentColor',s=20)=>`<svg aria-hidden="true" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>`,
   right:(c='currentColor',s=20)=>`<svg aria-hidden="true" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`,
-  notes:(c='currentColor',s=18)=>`<svg aria-hidden="true" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>`,
   fs:(c='currentColor',s=18)=>`<svg aria-hidden="true" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>`
 };
 document.querySelectorAll('[data-av]').forEach(el=>{const u=USERS[el.dataset.av];if(u)el.outerHTML=avatarSVG(u,+el.dataset.s||40);});
 document.querySelectorAll('i[data-ic]').forEach(el=>{const f=I[el.dataset.ic];if(f)el.outerHTML=f(el.dataset.c||'currentColor',+el.dataset.s||18);});
 document.getElementById('prev').innerHTML=I.left();document.getElementById('next').innerHTML=I.right();
-document.getElementById('notesBtn').innerHTML=I.notes();document.getElementById('fsBtn').innerHTML=I.fs();
+document.getElementById('fsBtn').innerHTML=I.fs();
 
 /* ---------- deck engine ---------- */
 const stage=document.getElementById('stage'),slides=[...stage.querySelectorAll('.slide')],N=slides.length;
-const trail=document.getElementById('trail'),notesEl=document.getElementById('notes'),counter=document.getElementById('counter');
+const trail=document.getElementById('trail'),counter=document.getElementById('counter');
 const reduce=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let cur=-1;
 function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`translate(${-960*s}px,${-540*s}px) scale(${s})`;}
@@ -1090,16 +946,13 @@ function go(i){
   trail.classList.remove('go');trail.classList.toggle('dark',sl.dataset.theme==='dark');void trail.offsetWidth;if(!reduce())trail.classList.add('go');
   counter.textContent=`${pad(cur+1)} / ${pad(N)}`;
   document.getElementById('progress').style.width=((cur+1)/N*100)+'%';
-  const nt=sl.querySelector('.notes');notesEl.querySelector('.nh').textContent=`Speaker notes · ${pad(cur+1)} ${sl.dataset.title||''}`;notesEl.querySelector('.nb').innerHTML=nt?nt.innerHTML:'';
   countUp(sl);
   if(location.hash!=='#'+(cur+1))history.replaceState(null,'','#'+(cur+1));
 }
 const next=()=>go(cur+1),prev=()=>go(cur-1);
-function toggleNotes(){const on=notesEl.classList.toggle('on');document.getElementById('notesBtn').setAttribute('aria-pressed',on);}
 function toggleFS(){if(!document.fullscreenElement){(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen||function(){}).call(document.documentElement);}else{(document.exitFullscreen||document.webkitExitFullscreen).call(document);}}
 document.getElementById('prev').onclick=e=>{e.stopPropagation();prev();};
 document.getElementById('next').onclick=e=>{e.stopPropagation();next();};
-document.getElementById('notesBtn').onclick=e=>{e.stopPropagation();toggleNotes();};
 document.getElementById('fsBtn').onclick=e=>{e.stopPropagation();toggleFS();};
 addEventListener('keydown',e=>{
   if(e.metaKey||e.ctrlKey||e.altKey)return;
@@ -1107,9 +960,9 @@ addEventListener('keydown',e=>{
   if(['ArrowRight','PageDown',' ','Enter'].includes(k)){if(k==='Enter'&&e.target.closest('button'))return;e.preventDefault();next();}
   else if(['ArrowLeft','PageUp','Backspace'].includes(k)){e.preventDefault();prev();}
   else if(k==='Home'){e.preventDefault();go(0);}else if(k==='End'){e.preventDefault();go(N-1);}
-  else if(k==='n'||k==='N'){toggleNotes();}else if(k==='f'||k==='F'){toggleFS();}
+  else if(k==='f'||k==='F'){toggleFS();}
 });
-document.addEventListener('click',e=>{if(e.target.closest('#controls,#notes'))return;(e.clientX<innerWidth*0.25)?prev():next();});
+document.addEventListener('click',e=>{if(e.target.closest('#controls'))return;(e.clientX<innerWidth*0.25)?prev():next();});
 let tx=null;addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
 addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)(dx<0?next:prev)();tx=null;});
 let idle;addEventListener('mousemove',()=>{document.body.classList.add('show-ui');clearTimeout(idle);idle=setTimeout(()=>document.body.classList.remove('show-ui'),2200);});
